@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiprof"
+version = "0.0.0"
+description = "AIProf backend and tooling"
+authors = [
+  { name = "AIProf Team", email = "devnull@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Provisional" }
+dependencies = []
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+markers = [
+  "unit: unit tests focused on isolated components",
+  "integration: integration tests covering multiple components",
+  "bdd: behaviour-driven tests defined via Gherkin scenarios",
+]
+asyncio_mode = "auto"
+bdd_features_base_dir = "tests/bdd/features"
+
+[tool.tox]
+requires = ["tox>=4.15"]
+env_list = ["py311", "bdd"]
+package = "skip"
+
+[tool.tox.env.py311]
+description = "Run fast unit and integration test suite"
+deps = ["-r", "requirements-dev.txt"]
+commands = [
+  ["pytest", "-m", "unit or integration"]
+]
+set_env = { PYTHONPATH = "{toxinidir}" }
+
+[tool.tox.env.bdd]
+description = "Run behaviour-driven scenarios"
+deps = ["-r", "requirements-dev.txt"]
+commands = [
+  ["pytest", "-m", "bdd"]
+]
+set_env = { PYTHONPATH = "{toxinidir}" }

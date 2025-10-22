@@ -40,7 +40,7 @@ async def ingest_xapi_statement(
     statement: XAPIStatement,
     lrs: LocalXAPIStore = Depends(get_lrs),
 ) -> dict[str, str]:
-    lrs.save_statement(statement.model_dump())
+    lrs.save_statement(statement.dict())
     return {"status": "queued"}
 
 
