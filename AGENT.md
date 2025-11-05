@@ -21,7 +21,7 @@ This document recull l’estat actual del projecte i les pautes per continuar tr
 - Configuració centralitzada `backend/utils/config.py` amb Pydantic `Settings`.
 
 ## Frontend de prova (Streamlit)
-- Fitxer `frontend/app.py` mostra un formulari amb dades de l’alumne, demana contingut al backend i envia una resposta simulada.
+- Fitxer `frontend/app.py` mostra un formulari amb dades de l’alumne, demana contingut al backend (nivell + assignatura + mòdul seleccionable) i envia una resposta simulada.
 - Configurable via `AIPROF_BACKEND_URL` o camp lateral.
 - Registra les interaccions a `data/validation_log.jsonl`.
 - Execució: `streamlit run frontend/app.py` (després d’arrencar `uvicorn backend.main:app --reload`).

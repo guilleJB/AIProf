@@ -68,8 +68,8 @@ AIProf/
 1. Activa l’entorn `pyenv activate aiprof` i instal·la les dependències: `pip install -r requirements-dev.txt`.
 2. En una terminal, arrenca el backend: `uvicorn backend.main:app --reload`.
 3. En una altra terminal, llança la demo: `streamlit run frontend/app.py`.
-4. Omple el formulari (nom, nivell, resposta) i envia.  
-   - Les peticions MCP es fan via `/mcp/curriculum/{nivell}`.  
+4. Escull el nivell, l’assignatura disponible i el mòdul que vulguis treballar, redacta la resposta i envia.  
+   - Les peticions MCP es fan via `/mcp/curriculum/{nivell}` i `/mcp/exercises/*`.  
    - Les respostes s’envien a `/xapi/statements` i es registren a `data/xapi_log.jsonl` i `data/validation_log.jsonl`.
 
 ## Full de ruta immediat

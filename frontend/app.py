@@ -27,8 +27,9 @@ def log_validation(entry: dict[str, Any]) -> None:
         handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
-def fetch_curriculum(level: str, base_url: str) -> list[dict[str, Any]]:
-    response = requests.get(f"{base_url}/mcp/curriculum/{level}", timeout=10)
+def fetch_curriculum(level: str, base_url: str, subject: str | None = None) -> list[dict[str, Any]]:
+    params = {"subject": subject} if subject else None
+    response = requests.get(f"{base_url}/mcp/curriculum/{level}", params=params, timeout=10)
     if response.status_code != 200:
         raise RuntimeError(f"Currículum no disponible ({response.status_code})")
     return response.json().get("modules", [])
@@ -41,6 +42,12 @@ def send_statement(payload: dict[str, Any], base_url: str) -> None:
 
 def build_statement(student: str, exercise: dict[str, Any], answer: str) -> dict[str, Any]:
     now = datetime.utcnow().isoformat() + "Z"
+    context_parent = {"id": f"http://aiprof.local/curriculum/{exercise['id']}"}
+    context = {"contextActivities": {"parent": [context_parent]}}
+    if exercise.get("subject"):
+        context["contextActivities"]["category"] = [
+            {"id": f"http://aiprof.local/subject/{exercise['subject']}"}
+        ]
     return {
         "actor": {"name": student, "mbox": f"mailto:{student.replace(' ', '').lower()}@aiprof.local"},
         "verb": {"id": "http://adlnet.gov/expapi/verbs/answered", "display": {"en": "answered"}},
@@ -52,7 +59,7 @@ def build_statement(student: str, exercise: dict[str, Any], answer: str) -> dict
             },
         },
         "result": {"response": answer},
-        "context": {"contextActivities": {"parent": [{"id": f"http://aiprof.local/curriculum/{exercise['id']}"}]}},
+        "context": context,
         "timestamp": now,
     }
 
@@ -69,19 +76,51 @@ def main() -> None:
     student_name = st.text_input("Nom de l'alumne", value="Alex Pupil")
     level = st.selectbox("Nivell", options=["1eso", "3eso"])
 
+    available_subjects: list[str] | None = None
+    if "subject_cache" not in st.session_state:
+        st.session_state.subject_cache = {}
+
+    cache = st.session_state.subject_cache
+    if level not in cache:
+        try:
+            fetched = fetch_curriculum(level, backend_url)
+            subjects = sorted({module.get("subject", "") for module in fetched if module.get("subject")})
+            cache[level] = subjects
+        except Exception:
+            cache[level] = []
+
+    available_subjects = cache.get(level, [])
+    subject = st.selectbox(
+        "Assignatura",
+        options=["(Totes)"] + available_subjects if available_subjects else ["(Totes)"]
+    )
+    subject_filter = None if subject == "(Totes)" else subject
+
     if "exercise" not in st.session_state:
         st.session_state.exercise = None
+    if "modules" not in st.session_state:
+        st.session_state.modules = []
 
     if st.button("Obtenir exercici"):
         try:
-            modules = fetch_curriculum(level, backend_url)
+            modules = fetch_curriculum(level, backend_url, subject_filter)
             if not modules:
-                st.warning("No hi ha contingut per aquest nivell.")
+                st.warning("No hi ha contingut per aquest nivell/assignatura.")
             else:
+                st.session_state.modules = modules
                 st.session_state.exercise = modules[0]
                 st.success(f"Exercici carregat: {modules[0]['title']}")
         except Exception as exc:  # pragma: no cover - UX feedback
             st.error(f"Error obtenint currículum: {exc}")
+
+    if st.session_state.modules:
+        options = {module["title"]: module for module in st.session_state.modules}
+        selected_title = st.selectbox(
+            "Selecciona el mòdul",
+            options=list(options.keys()),
+            key="module_selector",
+        )
+        st.session_state.exercise = options[selected_title]
 
     exercise = st.session_state.exercise
     if exercise:
@@ -98,6 +137,7 @@ def main() -> None:
                     {
                         "student": student_name,
                         "level": level,
+                        "subject": exercise.get("subject"),
                         "exercise": exercise["id"],
                         "answer": answer,
                         "timestamp": statement["timestamp"],
