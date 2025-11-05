@@ -1,0 +1,37 @@
+[
+  {
+    "id": "lengua-elementos-comunicacion",
+    "subject": "castellà",
+    "title": "Elements de la comunicació",
+    "objective": "Reconèixer els elements bàsics (emissor, receptor, missatge, canal i codi) que intervenen en un acte comunicatiu.",
+    "example_exercise": "Llegeix una conversa senzilla i identifica qui és l’emissor, qui és el receptor, quin és el missatge, quin canal s’utilitza i quin codi comparteixen."
+  },
+  {
+    "id": "lengua-figuras-sonoras",
+    "subject": "castellà",
+    "title": "Figures literàries basades en el so",
+    "objective": "Comprendre i aplicar paranomàsia, al·literació i onomatopeia en oracions curtes.",
+    "example_exercise": "Indica quina figura literària apareix en cadascuna de les frases següents i crea’n una de nova amb la mateixa figura."
+  },
+  {
+    "id": "lengua-relacions-paraules",
+    "subject": "castellà",
+    "title": "Relacions entre paraules en l’enunciat",
+    "objective": "Detectar figures com la derivació, l’anàfora, el paral·lelisme i l’hipèrbaton en textos breus.",
+    "example_exercise": "En un fragment donat subratlla els exemples d’anàfora o paral·lelisme i reescriu l’oració perquè contingui un hipèrbaton correcte."
+  },
+  {
+    "id": "lengua-significat-palabras",
+    "subject": "castellà",
+    "title": "Figures segons el significat",
+    "objective": "Identificar i produir antítesi, hipèrbole, personificació, comparació i metàfora.",
+    "example_exercise": "Transforma cadascuna d’aquestes frases perquè utilitzi la figura indicada: antítesi, hipèrbole, personificació, comparació i metàfora."
+  },
+  {
+    "id": "lengua-generos-literarios",
+    "subject": "castellà",
+    "title": "Gèneres literaris",
+    "objective": "Classificar textos segons pertanyin al gènere narratiu, líric o dramàtic i reconèixer-ne subgèneres habituals.",
+    "example_exercise": "Llegeix tres fragments i decideix si són narratius, lírics o dramàtics. Explica en cada cas quins elements et fan pensar-ho."
+  }
+]

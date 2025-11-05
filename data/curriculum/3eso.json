@@ -1,0 +1,14 @@
+[
+  {
+    "id": "physics-motion",
+    "title": "Moviment rectilini uniforme",
+    "objective": "Calcular velocitat i temps en trajectòries rectes.",
+    "example_exercise": "Un cotxe recorre 120 km en 2 hores. Calcula la seva velocitat."
+  },
+  {
+    "id": "math-equations",
+    "title": "Equacions lineals",
+    "objective": "Resoldre equacions amb una incògnita.",
+    "example_exercise": "Resol 3x + 5 = 17 i interpreta el resultat."
+  }
+]

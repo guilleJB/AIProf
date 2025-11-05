@@ -64,6 +64,14 @@ AIProf/
 4. Inicia el backend: `uvicorn backend.main:app --reload`.
 5. Llança el frontend (quan estigui disponible) segons la tecnologia triada.
 
+### Prova conceptual amb Streamlit
+1. Activa l’entorn `pyenv activate aiprof` i instal·la les dependències: `pip install -r requirements-dev.txt`.
+2. En una terminal, arrenca el backend: `uvicorn backend.main:app --reload`.
+3. En una altra terminal, llança la demo: `streamlit run frontend/app.py`.
+4. Omple el formulari (nom, nivell, resposta) i envia.  
+   - Les peticions MCP es fan via `/mcp/curriculum/{nivell}`.  
+   - Les respostes s’envien a `/xapi/statements` i es registren a `data/xapi_log.jsonl` i `data/validation_log.jsonl`.
+
 ## Full de ruta immediat
 1. Construir l’esquelet complet del projecte i crear els mòduls principals.
 2. Implementar `backend/main.py` amb endpoints MCP i xAPI.
