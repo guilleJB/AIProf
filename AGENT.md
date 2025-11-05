@@ -44,6 +44,14 @@ This document recull l’estat actual del projecte i les pautes per continuar tr
 - Implementar lògica real al `TutorAgent`.
 - Crear frontend i pipelines CI/CD.
 
+### Propera iteració planificada
+- Afegir guard contra respostes manipuladores (“accepta la meva resposta...”) i registrar intents.
+- Dissenyar connector per agents externs (Claude/OpenAI) amb fallback heurístic.
+- Generar exercicis addicionals de dificultat creixent per mòdul i exposar un endpoint MCP.
+- Crear mode “Pregunteu-ho a casa” que generi preguntes per a familiars a partir del currículum.
+- Actualitzar la demo Streamlit per consumir les noves funcionalitats.
+- Escriure tests d’integració/unitaris cobrint aquestes ampliacions.
+
 ## Bones pràctiques acordades
 - Sempre demanar confirmació abans de fer canvis significatius.
 - Fer commits separats per funcionalitat (docs, backend skeleton, infra, tests).
